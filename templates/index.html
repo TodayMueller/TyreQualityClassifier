@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {% block title %}Классификатор состояния шин{%
+endblock %} {% block content %}
+<div class="container">
+  <h1 class="page-title">Классификатор состояния шин</h1>
+
+  <div class="upload-box" id="drop-zone">
+    <div class="upload-content">
+      <svg class="upload-icon" viewBox="0 0 24 24">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+      </svg>
+      <p class="upload-title">Перетащите файлы или папки сюда</p>
+      <p class="upload-separator">или</p>
+
+      <div class="input-group">
+        <input
+          type="file"
+          id="file-input"
+          multiple
+          accept="image/jpeg"
+          hidden
+        />
+        <input type="file" id="folder-input" webkitdirectory directory hidden />
+        <button type="button" id="btn-file" class="btn btn--primary">
+          Выберите файлы
+        </button>
+        <button type="button" id="btn-folder" class="btn btn--primary">
+          Выберите папку
+        </button>
+      </div>
+
+      <p class="upload-requirements">
+        Поддерживаются изображения <strong>JPEG или PNG</strong> весом от
+        <strong>65 КБ</strong> до <strong>5 МБ</strong> и размером не менее
+        <strong>282 × 282 px</strong>.
+      </p>
+    </div>
+    <div id="drop-spinner"></div>
+  </div>
+
+  <div id="main-spinner" class="history-spinner hidden"></div>
+
+  <div id="result-container" class="hidden">
+    <h2>Результаты последних запросов</h2>
+    <div id="results-list" class="results-grid"></div>
+  </div>
+</div>
+
+<div id="image-modal">
+  <div id="image-modal-close">&times;</div>
+  <div id="image-modal-prev" class="image-modal-arrow">&#10094;</div>
+  <div id="image-modal-next" class="image-modal-arrow">&#10095;</div>
+  <div id="image-modal-content">
+    <img id="image-modal-img" src="" />
+    <div id="image-modal-info">
+      <div id="image-modal-filename"></div>
+      <div id="image-modal-time"></div>
+      <div id="image-modal-verdict"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

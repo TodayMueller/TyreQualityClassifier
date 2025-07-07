@@ -1,0 +1,92 @@
+{% extends "layout.html" %} {% block title %}Статистика{% endblock %} {% block
+  head %}
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+  <script>
+    flatpickr.localize(flatpickr.l10ns.ru);
+  </script>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/stats.css') }}"
+  />
+  {% endblock %} {% block content %}
+  <div class="page-container stats-page">
+    <div class="container">
+      <h1 class="page-title">Статистика запросов</h1>
+  
+      <div class="stats-filters">
+        <button class="filter-button" data-range="all">Все</button>
+        <button class="filter-button" data-range="today">Сегодня</button>
+        <button class="filter-button" data-range="week">Неделя</button>
+        <button class="filter-button" data-range="month">Месяц</button>
+        <button class="filter-button" data-range="custom">Произвольный</button>
+        <input id="date-range-picker" type="text" hidden />
+      </div>
+  
+      <div id="stats-spinner" class="spinner hidden"></div>
+  
+      <div class="stats-summary hidden">
+        <div class="summary-line">
+          <strong>Период:</strong> <span id="stats-period"></span>
+        </div>
+        <div class="summary-line center">
+          <strong>Всего запросов:</strong> <span id="stats-total"></span>
+        </div>
+        <div class="summary-line stats-cats">
+          <span class="status-good"
+            >Пригодные: <span id="count-good"></span> <span
+              id="percent-good"
+            ></span
+            ></span
+          >
+          <span class="status-defective"
+            >Непригодные: <span id="count-defective"></span> <span
+              id="percent-defective"
+            ></span
+            ></span
+          >
+          <span class="status-external"
+            >Сторонние: <span id="count-external"></span> <span
+              id="percent-external"
+            ></span
+            ></span
+          >
+          <span class="status-error"
+            >Отклонённые: <span id="count-error"></span> <span
+              id="percent-error"
+            ></span
+            ></span
+          >
+        </div>
+      </div>
+  
+      <div class="charts">
+        <div class="chart-card hidden">
+          <canvas id="stats-chart"></canvas>
+        </div>
+        <div class="chart-card hidden">
+          <canvas id="histogram-chart"></canvas>
+        </div>
+      </div>
+  
+      <div id="metrics-container" class="metrics hidden"></div>
+  
+      <div id="no-data-message" class="no-data hidden">
+        Невозможно собрать статистику, так как за выбранный период времени
+        запросов не было
+      </div>
+  
+      <div class="export-actions-bottom hidden">
+        <button id="export-excel" class="btn btn--outline">XLSX</button>
+      </div>
+    </div>
+    {% endblock %} 
+    {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+    {% endblock %}
+  </div>

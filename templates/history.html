@@ -1,0 +1,55 @@
+{% extends "layout.html" %} {% block title %}История запросов{% endblock %} {%
+block content %}
+<div class="container">
+  <div class="history-header">
+    <h1 class="page-title">История запросов</h1>
+  </div>
+
+  <div class="filter-bar">
+    <button data-status="all" class="filter-button active">Все</button>
+    <button data-status="good" class="filter-button">Пригодные</button>
+    <button data-status="defective" class="filter-button">Непригодные</button>
+    <button data-status="external" class="filter-button">Сторонние</button>
+    <button data-status="error" class="filter-button">Отклонённые</button>
+    <button id="btn-clear-history" class="btn-clear filter-button" title="Очистить историю">
+        <svg class="icon-trash" viewBox="0 0 24 24">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+        </svg>
+    </button>
+</div>
+
+  <div id="history-spinner" class="history-spinner hidden"></div>
+
+  <div id="result-container" class="hidden">
+    <div class="history-grid" id="history-body"></div>
+
+    <div class="pagination">
+      <button id="prev-page" class="btn btn--primary">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+        </svg>
+      </button>
+      <span id="page-info" class="pagination-info"></span>
+      <button id="next-page" class="btn btn--primary">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="image-modal">
+  <div id="image-modal-close">&times;</div>
+  <div id="image-modal-prev" class="image-modal-arrow">&#10094;</div>
+  <div id="image-modal-next" class="image-modal-arrow">&#10095;</div>
+  <div id="image-modal-content">
+    <img id="image-modal-img" src="" />
+    <div id="image-modal-info">
+      <div id="image-modal-filename"></div>
+      <div id="image-modal-time"></div>
+      <div id="image-modal-verdict"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+Flask
+psycopg2-binary
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Login
+Flask-WTF
+Werkzeug
+torch
+torchvision
+Pillow
+XlsxWriter

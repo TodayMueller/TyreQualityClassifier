@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <title>{% block title %}Classifier{% endblock %}</title>
+
+    {# Базовые стили #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+
+    {# Стили страниц (history, stats и т.д.) #}
+    {% block head %}
+      {% if request.endpoint == 'history_page' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+      {% elif request.endpoint == 'stats_page' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+      {% endif %}
+    {% endblock %}
+  </head>
+
+  <body>
+    {% if request.endpoint not in ['login','register'] %}
+      <nav class="navbar">
+        <ul class="nav-list">
+          <li class="nav-item{% if request.endpoint=='index' %} active{% endif %}">
+            <a href="{{ url_for('index') }}">Главная</a>
+          </li>
+          <li class="nav-item{% if request.endpoint=='history_page' %} active{% endif %}">
+            <a href="{{ url_for('history_page') }}">История</a>
+          </li>
+          <li class="nav-item{% if request.endpoint=='stats_page' %} active{% endif %}">
+            <a href="{{ url_for('stats_page') }}">Статистика</a>
+          </li>
+        </ul>
+        <a class="btn btn--logout" href="{{ url_for('logout') }}">Выход</a>
+      </nav>
+    {% endif %}
+
+    <main class="main-content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <ul class="flashes">
+            {% for category, msg in messages %}
+              <li class="flash flash--{{ category }}">{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    {# Общие скрипты #}
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+    {% if request.endpoint == 'index' %}
+      <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% elif request.endpoint == 'history_page' %}
+      <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+    {% endif %}
+
+    {# Скрипты страниц #}
+    {% block scripts %}
+      {% if request.endpoint == 'stats_page' %}
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+      {% endif %}
+    {% endblock %}
+  </body>
+</html>
